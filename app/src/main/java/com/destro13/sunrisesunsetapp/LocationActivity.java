@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.destro13.sunrisesunsetapp.location.LocationManager;
-import com.destro13.sunrisesunsetapp.mvp.model.SunriseSunsetReport;
+import com.destro13.sunrisesunsetapp.mvp.model.sunrisesunset.SunriseSunsetReport;
 import com.destro13.sunrisesunsetapp.mvp.presenter.LocationPresenter;
 import com.destro13.sunrisesunsetapp.mvp.presenter.LocationPresenterImpl;
+import com.destro13.sunrisesunsetapp.mvp.view.FindCityActivity;
 import com.destro13.sunrisesunsetapp.mvp.view.LocationView;
 import com.destro13.sunrisesunsetapp.util.DateUtil;
 
@@ -35,7 +35,7 @@ public class LocationActivity extends AppCompatActivity implements LocationView 
 
     private static final String TAG = LocationActivity.class.getSimpleName();
 
-    private LocationManager locationManager;
+    //private LocationManager locationManager;
     private LocationPresenter locationPresenter;
 
     @Override
@@ -46,8 +46,8 @@ public class LocationActivity extends AppCompatActivity implements LocationView 
         ButterKnife.bind(this);
 
         locationPresenter = new LocationPresenterImpl(this);
-        locationManager = new LocationManager(this);
-        locationManager.init();
+        //locationManager = new LocationManager(this);
+      //  locationManager.init();
 
     }
 
@@ -64,25 +64,33 @@ public class LocationActivity extends AppCompatActivity implements LocationView 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        locationManager.onActivityResult(requestCode,resultCode, data);
+        locationPresenter.onActivityResult(requestCode,resultCode, data);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        locationManager.onResume();
+        locationPresenter.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        locationManager.onPause();
+        locationPresenter.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (locationPresenter != null) {
+            locationPresenter.unSubscribe();
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        locationManager.onRequestPerssionResult(requestCode, permissions,grantResults);
+        locationPresenter.onRequestPermissionResult(requestCode, permissions,grantResults);
     }
 
     @Override

@@ -14,6 +14,8 @@ public final class DateUtil {
     }
 
     public static String utcToLocal(String date){
+        Calendar cal = Calendar.getInstance();
+        TimeZone tz = cal.getTimeZone();
         Date outDate = null;
         DateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+00:00");
         localDateFormat.setTimeZone(TimeZone.getTimeZone("PST"));

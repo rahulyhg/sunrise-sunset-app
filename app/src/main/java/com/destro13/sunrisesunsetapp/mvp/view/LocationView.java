@@ -1,10 +1,7 @@
 package com.destro13.sunrisesunsetapp.mvp.view;
 
-import com.destro13.sunrisesunsetapp.mvp.model.SunriseSunsetReport;
+import com.destro13.sunrisesunsetapp.mvp.model.sunrisesunset.SunriseSunsetReport;
 
-public interface LocationView {
-    void showLoading();
-    void closeLoading();
-    void showError(String s);
+public interface LocationView extends BaseView {
     void setData(SunriseSunsetReport sunriseSunsetReport);
 }

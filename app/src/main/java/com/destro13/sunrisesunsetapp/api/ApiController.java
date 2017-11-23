@@ -6,10 +6,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiController {
-    static final String BASE_URL = "https://api.sunrise-sunset.org/";
+public abstract class ApiController {
+    String BASE_URL;
 
-    public static ApiService getApi() {
+    public ApiService getApi() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()

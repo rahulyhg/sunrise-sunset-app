@@ -158,7 +158,7 @@ public class LocationManager {
 
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
-            ((LocationActivity) context).updateCoordinates(mCurrentLocation.getLongitude(),mCurrentLocation.getLatitude());
+            ((LocationActivity) context).updateCoordinates(mCurrentLocation.getLongitude(), mCurrentLocation.getLatitude());
         }
     }
 
@@ -243,7 +243,7 @@ public class LocationManager {
         stopLocationUpdates();
     }
 
-    public void onRequestPerssionResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (grantResults.length <= 0) {
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

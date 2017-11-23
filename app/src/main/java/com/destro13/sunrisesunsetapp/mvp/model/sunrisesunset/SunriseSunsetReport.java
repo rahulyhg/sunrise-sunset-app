@@ -1,5 +1,5 @@
 
-package com.destro13.sunrisesunsetapp.mvp.model;
+package com.destro13.sunrisesunsetapp.mvp.model.sunrisesunset;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
