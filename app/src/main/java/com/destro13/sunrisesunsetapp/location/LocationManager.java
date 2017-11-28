@@ -47,7 +47,6 @@ public class LocationManager {
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
             UPDATE_INTERVAL_IN_MILLISECONDS / 2;
-    private boolean isGpsOn = false;
     private FusedLocationProviderClient mFusedLocationClient;
     private SettingsClient mSettingsClient;
     private LocationRequest mLocationRequest;
@@ -56,8 +55,6 @@ public class LocationManager {
 
     private Boolean mRequestingLocationUpdates;
 
-    private String mLastUpdateTime;
-
     private Location mCurrentLocation;
 
     private Context context;
@@ -65,7 +62,6 @@ public class LocationManager {
     public LocationManager(Context ctx) {
         context = ctx;
         mRequestingLocationUpdates = false;
-        mLastUpdateTime = "";
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         mSettingsClient = LocationServices.getSettingsClient(context);
     }
@@ -90,7 +86,6 @@ public class LocationManager {
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 mCurrentLocation = locationResult.getLastLocation();
-                mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
                 updateLocationUI();
             }
         };
@@ -109,10 +104,6 @@ public class LocationManager {
         }
     }
 
-    public void stopUpdatesButtonHandler(View view) {
-        stopLocationUpdates();
-    }
-
     private void startLocationUpdates() {
         mSettingsClient.checkLocationSettings(mLocationSettingsRequest)
                 .addOnSuccessListener((Activity) context, new OnSuccessListener<LocationSettingsResponse>() {
@@ -121,7 +112,6 @@ public class LocationManager {
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
                                 mLocationCallback, Looper.myLooper());
-                        isGpsOn = true;
                         updateUI();
                     }
                 })
